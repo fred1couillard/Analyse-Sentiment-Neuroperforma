@@ -8,7 +8,7 @@ import time
 import re
 
 # --- CONFIGURATION ---
-APIFY_TOKEN = os.getenv("APIFY_TOKEN", "VOTRE_TOKEN_ICI")
+APIFY_TOKEN = os.getenv("APIFY_TOKEN", "Token")
 JSON_CREDS = "credentials.json"
 SHEET_NAME = "Analyse_Sentiments_Neuro"
 
@@ -70,7 +70,7 @@ categories_macro = ["Efficacité du traitement", "Prix et Remboursement", "Servi
 sujets_micro = ["remboursement", "assurance", "accueil", "résultat", "prix", "téléphone", "rendez-vous", "écoute", "explication"]
 
 def analyse_hybride(row):
-    # A. Sentiment (Priorité stricte à la NOTE et sans émojis)
+    # A. Sentiment
     note = float(row['note'])
     if note < 3:
         sentiment = "Negatif"
@@ -81,7 +81,6 @@ def analyse_hybride(row):
     
     texte = str(row['commentaire']).strip()
     
-    # Si le texte est trop court, on s'arrête là pour les thèmes
     if len(texte) < 10:
         return sentiment, "General", "N/A"
     
@@ -125,5 +124,6 @@ try:
         onglet_details.update('A2', details)
 except:
     pass
+
 
 print(f" TERMINÉ : Dashboard mis à jour avec {len(df)} analyses !")
