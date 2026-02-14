@@ -1,0 +1,6 @@
+apify-client
+pandas
+transformers
+gspread
+oauth2client
+torch
